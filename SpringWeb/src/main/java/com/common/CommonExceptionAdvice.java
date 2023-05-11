@@ -16,19 +16,20 @@ import lombok.extern.log4j.Log4j;
 @ControllerAdvice
 @Log4j
 public class CommonExceptionAdvice {
-   
-   @ExceptionHandler(NotUserException.class)
-   public String exceptionHandler(Exception ex, Model m) {
-      //ex.printStackTrace();
-      //log.error(ex);
-      m.addAttribute("exception", ex);
-      return "login/errorAlert";
-   }
-   
-   @ExceptionHandler(NumberFormatException.class)
-   public String exceptionHandler2(Exception ex) {
-      //log.error(ex);
-      return "login/errorAlert";
-   }
-   
+	
+	@ExceptionHandler(NotUserException.class)
+	public String exceptionHandler(Exception ex, Model m) {
+		//ex.printStackTrace();
+		//log.error(ex);
+		m.addAttribute("exception", ex);
+		return "login/errorAlert";
+	}
+	
+	@ExceptionHandler(NumberFormatException.class)
+	public String exceptionHandler2(Exception ex,Model m) {
+		//log.error(ex);
+		m.addAttribute("exception", ex);
+		return "login/errorAlert";
+	}
+
 }

@@ -51,3 +51,7 @@
 		name=#{name}, msg=#{msg} where no=#{no}
 	</update>
 </mapper>
+
+
+
+

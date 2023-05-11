@@ -5,5 +5,4 @@ public interface Emp {
 	void info2();
 	void info3();
 	void info4();
-
 }

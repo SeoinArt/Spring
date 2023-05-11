@@ -7,6 +7,7 @@ import com.user.model.PagingVO;
 import com.user.model.UserVO;
 
 public interface UserService {
+	
 	int createUser(UserVO user);
 
 	int getUserCount(PagingVO pvo);
@@ -24,4 +25,5 @@ public interface UserService {
 	UserVO findUser(UserVO findUser) throws NotUserException;
 
 	UserVO loginCheck(String userid, String pwd) throws NotUserException;
+
 }

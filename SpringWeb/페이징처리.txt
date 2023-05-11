@@ -1,7 +1,7 @@
-1. ì´ ê²Œì‹œê¸€ ìˆ˜ :  totalCount (16ê°œ)
-2. í•œ í˜ì´ì§€ ë‹¹ ë³´ì—¬ì¤„ ëª©ë¡ ê°œìˆ˜:
-       pageSize: 5ê°œ
-3. í˜ì´ì§€ ìˆ˜ êµ¬í•˜ê¸°
+1. ÃÑ °Ô½Ã±Û ¼ö :  totalCount (16°³)
+2. ÇÑ ÆäÀÌÁö ´ç º¸¿©ÁÙ ¸ñ·Ï °³¼ö:
+       pageSize: 5°³
+3. ÆäÀÌÁö ¼ö ±¸ÇÏ±â
        pageCount (4page)
 
 totalCount	pageSize		pageCount
@@ -16,19 +16,19 @@ if(totalCount%pageSize==0)
 else
 	pageCount=totalCount/pageSize +1
 /////////////////////////////////////////////
-==> 1ì¤„ë¡œ ì¤„ì—¬ë³´ì
+==> 1ÁÙ·Î ÁÙ¿©º¸ÀÚ
 pageCount=(totalCount-1)/pageSize+1;
 
-4. JSPì—ì„œ pageCount ìˆ˜ë§Œí¼ ë°˜ë³µë¬¸ ëŒë©´ì„œ
-í˜ì´ì§€ ë§í¬ë¥¼ ì¶œë ¥í•œë‹¤
+4. JSP¿¡¼­ pageCount ¼ö¸¸Å­ ¹İº¹¹® µ¹¸é¼­
+ÆäÀÌÁö ¸µÅ©¸¦ Ãâ·ÂÇÑ´Ù
 <c:forEach var="i" begin="1" end="${pageCount}">	
  <li><a href="boardList.do?cpage=${i}">${i}</a></li>
 </c:forEach>
     		
-==> ì´ë•Œ í˜„ì¬ ë³´ì—¬ì¤„ í˜ì´ì§€(cpage)ê°’ì„ query string
-ìœ¼ë¡œ ì „ë‹¬í•œë‹¤		
+==> ÀÌ¶§ ÇöÀç º¸¿©ÁÙ ÆäÀÌÁö(cpage)°ªÀ» query string
+À¸·Î Àü´ŞÇÑ´Ù		
 
-5. cpageë¥¼ ì´ìš©í•´ì„œ DBì—ì„œ ëŠì–´ì˜¬ ë°ì´í„° ë²”ìœ„ë¥¼ ì •í•œë‹¤
+5. cpage¸¦ ÀÌ¿ëÇØ¼­ DB¿¡¼­ ²÷¾î¿Ã µ¥ÀÌÅÍ ¹üÀ§¸¦ Á¤ÇÑ´Ù
 
 select * from (
 select rownum rn, A.* from
@@ -44,8 +44,8 @@ cpage       pageSize        start       end
 end = cpage * pageSize
 start= end - (pageSize-1)
 
-6. BoardDAOì— start, endê°’ ë„˜ê²¨ì„œ subqueryì´ìš©í•´ì„œ
-í˜„ì¬ ë³´ì—¬ì¤„ í˜ì´ì§€ì— í•´ë‹¹í•˜ëŠ” ë°ì´í„°ë§Œ ê°€ì ¸ì˜¨ë‹¤
+6. BoardDAO¿¡ start, end°ª ³Ñ°Ü¼­ subqueryÀÌ¿ëÇØ¼­
+ÇöÀç º¸¿©ÁÙ ÆäÀÌÁö¿¡ ÇØ´çÇÏ´Â µ¥ÀÌÅÍ¸¸ °¡Á®¿Â´Ù
 
 
 

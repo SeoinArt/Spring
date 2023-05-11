@@ -3,7 +3,7 @@ package ex05;
 import java.util.Random;
 
 public class EmpImpl implements Emp {
-
+	
 	//property
 	private String dept;
 	private String name;
@@ -13,20 +13,20 @@ public class EmpImpl implements Emp {
 	public EmpImpl() {
 		
 	}
+	
 	public EmpImpl(String name) {
 		this.name=name;
 	}
-	
 	public EmpImpl(Random ran) {
-		this.ran =ran;
+		this.ran=ran;
 	}
-	public EmpImpl(String d,String n ) {
-		this.dept=d; this.name=n;
+	public EmpImpl(String d, String n) {
+		dept=d; name=n;
 	}
-	public EmpImpl(String d,String n, int s ) {
-		this.dept=d; this.name=n; this.sal = s;
+	public EmpImpl(String d, String n, int s) {
+		dept=d; name=n; sal=s;
 	}
-	
+
 	@Override
 	public void info1() {
 		System.out.println("Name: "+name);
@@ -41,12 +41,13 @@ public class EmpImpl implements Emp {
 	@Override
 	public void info3() {
 		this.info2();//이름, 부서
-		System.out.println("sal: "+sal);
+		System.out.println("Salary: "+sal);
 	}
 
 	@Override
 	public void info4() {
 		System.out.println("행운의 숫자: "+ran.nextInt(100));
+
 	}
 
 }

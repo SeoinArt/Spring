@@ -1,6 +1,6 @@
-BCryptPasswordEncoderë¥¼ ì´ìš©í•œ 
-ë¹„ë°€ë²ˆí˜¸ ì•”í˜¸í™”/ë³µí˜¸í™”
-[1] pom.xmlì— ê´€ë ¨ ë¼ì´ë¸ŒëŸ¬ë¦¬ ì¶”ê°€
+BCryptPasswordEncoder¸¦ ÀÌ¿ëÇÑ 
+ºñ¹Ğ¹øÈ£ ¾ÏÈ£È­/º¹È£È­
+[1] pom.xml¿¡ °ü·Ã ¶óÀÌºê·¯¸® Ãß°¡
 ============================
 <!-- security -->
 		<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-core -->
@@ -22,20 +22,20 @@ BCryptPasswordEncoderë¥¼ ì´ìš©í•œ
 			<version>5.0.7.RELEASE</version>
 		</dependency>
 ====================================
-[2] servlet-context.xmlì— namespace íƒ­ ì„ íƒí•´ì„œ securityë¥¼ ì²´í¬í•˜ì
+[2] servlet-context.xml¿¡ namespace ÅÇ ¼±ÅÃÇØ¼­ security¸¦ Ã¼Å©ÇÏÀÚ
 
-[3] servlet-context.xmlì— BCryptPasswordEncoderë¥¼ ë¹ˆìœ¼ë¡œ ë“±ë¡í•˜ì
+[3] servlet-context.xml¿¡ BCryptPasswordEncoder¸¦ ºóÀ¸·Î µî·ÏÇÏÀÚ
 <!-- Password Security -->
 	<beans:bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
 
-[4] íšŒì›ê°€ì… ì»¨íŠ¸ë¡¤ëŸ¬, ë¡œê·¸ì¸ ì»¨íŠ¸ë¡¤ëŸ¬ì—ì„œ BCryptPasswordEncoderë¥¼ ì£¼ì…í•˜ì
+[4] È¸¿ø°¡ÀÔ ÄÁÆ®·Ñ·¯, ·Î±×ÀÎ ÄÁÆ®·Ñ·¯¿¡¼­ BCryptPasswordEncoder¸¦ ÁÖÀÔÇÏÀÚ
 @Inject
 private BCryptPasswordEncoder passwordEncoder; 
 
-[5] ë¹„ë°€ë²ˆí˜¸ ì•”í˜¸í™” ì²˜ë¦¬
+[5] ºñ¹Ğ¹øÈ£ ¾ÏÈ£È­ Ã³¸®
 user.setPwd(passwordEncoder.encode(user.getPwd()));
 
-[6]ì•”í˜¸í™”ëœ ë¹„ë°€ë²ˆí˜¸ ì¼ì¹˜ì—¬ë¶€ ì²´í¬
+[6]¾ÏÈ£È­µÈ ºñ¹Ğ¹øÈ£ ÀÏÄ¡¿©ºÎ Ã¼Å©
 passwordEncoder.matches(pwd, user.getPwd())
 
 

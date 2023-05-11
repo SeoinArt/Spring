@@ -3,7 +3,7 @@ package com.user.model;
 import java.sql.Date;
 
 public class UserVO {
-	//property -멤버변수 (html input name과 db table의 컬럼명과 일치시켜주면 편리)
+	
 	private int idx;
 	private String name;
 	private String userid;
@@ -19,12 +19,13 @@ public class UserVO {
 	
 	private java.sql.Date indate;
 	private int mileage;
-	private int mstate;//회원 상태정보 (0: 활동회원,-1:정지회원,-2:탈퇴회원)
+	private int mstate;
 	private String mstateStr;
 	
 	public UserVO() {
 		
 	}
+	
 	public int getIdx() {
 		return idx;
 	}

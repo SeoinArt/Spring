@@ -3,6 +3,7 @@ package com.memo.model;
 import java.util.List;
 
 public interface MemoDAO {
+	
 	int insertMemo(MemoVO memo);
 	
 	int getTotalCount();
@@ -12,4 +13,5 @@ public interface MemoDAO {
 	int updateMemo(MemoVO memo);
 	
 	MemoVO getMemo(int no);
+
 }

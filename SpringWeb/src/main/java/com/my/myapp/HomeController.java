@@ -33,10 +33,10 @@ public class HomeController {
 		
 		model.addAttribute("serverTime", formattedDate );
 		
-		return "home"; // View Name
-		// "/WEB-INF/views/" =>prefix
-		// ".jsp" => suffix
-		// /WEB-INF/views/home.jsp ¸¦ ¹ÝÈ¯
+		return "home";//View Name
+		// "/WEB-INF/views/" => prefix
+		// ".jsp" ==> suffix
+		// /WEB-INF/views/home.jsp ï¿½ï¿½ ï¿½ï¿½È¯
 	}
 	
 }

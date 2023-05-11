@@ -12,19 +12,20 @@ import com.shop.model.ProductVO;
 
 @Service("adminService")
 public class AdminServiceImpl implements AdminService {
-
+	
 	@Inject
 	private ProductMapper prodMapper;
+
 	@Override
 	public List<CategoryVO> getUpcategory() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return prodMapper.getUpcategory();
 	}
 
 	@Override
-	public List<CategoryVO> getDowncategory(String upCg_code) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<CategoryVO> getDowncategory(int upCg_code) {
+		
+		return prodMapper.getDowncategory(upCg_code);
 	}
 
 	@Override
@@ -41,14 +42,13 @@ public class AdminServiceImpl implements AdminService {
 
 	@Override
 	public int productInsert(ProductVO prod) {
-		// TODO Auto-generated method stub
+		
 		return this.prodMapper.productInsert(prod);
 	}
 
 	@Override
 	public List<ProductVO> productList() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.prodMapper.getProducts();
 	}
 
 }

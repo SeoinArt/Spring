@@ -19,36 +19,33 @@ import com.user.service.UserService;
 
 @Controller
 public class LoginController {
-
+	
 	@Resource(name="userService")
-	//	@Autowired
+//	@Autowired //@Inject
 	private UserService userService;
 	
+//	@RequestMapping(value="/login",method=RequestMethod.GET)
 	@GetMapping("/login")
 	public String loginForm() {
 		return "login/login";
-		// WEB-INF/views/login/login.jsp
+		//WEB-IFN/views/login/login.jsp
 	}
 	
 	@PostMapping("/login")
 	public String loginProcess(HttpSession session,
 			HttpServletResponse response,
 			@ModelAttribute("user") UserVO user,
-			@RequestParam(defaultValue="off") String saveId) throws NotUserException {
-		System.out.println("saveId: "+saveId);
-//		System.out.println("id: "+user.getUserid()+", pwd : "+user.getPwd());
-		if(user.getUserid()==null || user.getPwd()==null || user.getUserid().trim().isEmpty()||user.getPwd().trim().isEmpty()) {
+			@RequestParam(defaultValue = "off") String saveId) throws NotUserException {
+		System.out.println("saveId: "+saveId);//체크박스에 체크하면 on, 체크하지 않으면 off
+		if(user.getUserid()==null||user.getPwd()==null||user.getUserid().trim().isEmpty()||user.getPwd().trim().isEmpty()) {
 			return "redirect:login";
 		}
-		
-		UserVO loginUser = userService.loginCheck(user.getUserid(), user.getPwd());
-		// userId와 pwd 가 일치하지 않으면 NotUserException 발생
-		// 				  일치하면 회원 정보를 담은 UserVO 객체 반환 => session에 저장 
-		
-		
+		UserVO loginUser=userService.loginCheck(user.getUserid(), user.getPwd());
+		//userid,pwd가 일치하지않으면 NotUserException
+		//			  일치하면 회원정보를 담은 UserVO객체를 반환한다=> 세션에 저장
 		if(loginUser!=null) {
 			session.setAttribute("loginUser", loginUser);
-			Cookie ck = new Cookie("uid",loginUser.getUserid());
+			Cookie ck=new Cookie("uid", loginUser.getUserid());
 			if(saveId.equals("on")) {
 				ck.setMaxAge(7*24*60*60);
 			}else {
@@ -57,21 +54,23 @@ public class LoginController {
 			ck.setPath("/");
 			response.addCookie(ck);
 		}
-		return "redirect:index";
 		
-	}// ---------------------------------------------------------------------
+		return "redirect:index";
+	}
 	
 	@GetMapping("/logout")
 	public String logout(HttpSession session) {
 		session.invalidate();
 		return "redirect:index";
 	}
-	
-	// 예외처리하는 메서드 앞에 @ExceptionHandler를 붙이고 구체적인 예외 클래스를 지정한다.
-	/*
-	 * @ExceptionHandler(NotUserException.class) public String
-	 * exceptionHandler(Exception ex, Model m) { ex.printStackTrace();
-	 * m.addAttribute("exception",ex); return "login/errorAlert"; }
-	 */
+	/*예외처리하는 메서드 앞에 @ExceptionHandler를 붙이고 구체적인 예외 클래스를 지정한다
+	/* => CommonExceptionAdvice 클래스에서 모아 처리하자
+	@ExceptionHandler(NotUserException.class)
+	public String exceptionHandler(Exception ex, Model m) {
+		ex.printStackTrace();
+		m.addAttribute("exception", ex);
+		return "login/errorAlert";
+	}
+	*/
 	
 }

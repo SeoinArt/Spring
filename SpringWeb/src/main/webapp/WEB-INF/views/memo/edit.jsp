@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" %>
+    pageEncoding="UTF-8"  %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -37,7 +37,7 @@
 <!-- http://localhost:9090/MyWeb/memo/MemoAdd?name=sdfsdf&msg=sdfsdf
 	http://localhost:9090/MyWeb/MemoAdd?name=aaa&msg=bbb
  -->
-	<form name="mf" action="memoEdit" method="post">
+<form name="mf" action="memoEdit" method="post">
 		<!-- table로 화면과 같이 구성하세요 -->
 		<table border="1">
 			<tr>
