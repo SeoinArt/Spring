@@ -16,7 +16,7 @@
 <div class="row">
 
 <div align="center" id="bbs" class="col-md-8 offset-md-2 my-4">
-   <h2>Spring Board</h2>
+   <h2>Spring Board 답변 글쓰기</h2>
    <p>
       <a href="write">글쓰기</a>| <a
          href="list">글목록</a>
@@ -27,17 +27,19 @@
 
    <form name="bf" id="bf" role="form" action="write" method="post" enctype="multipart/form-data" >
 	<!-- hidden data---------------------------------  -->
-	<input type="hidden" name="mode" value="write">
+	<input type="hidden" name="mode" value="rewrite">
 	<!-- 원본글쓰기: mode=> write
 		 답변글쓰기: mode=> rewrite
 		    글수정:: mode=> edit
 	 -->
+	 <input type="hidden" name="num" value="<c:out value="${num}"/>" >
+	 <!-- 부모글의 글 번호를 hidden으로 넘긴다. -->
 	<!-- -------------------------------------------- -->       
     <table class="table">
        <tr>
           <td style="width:20%"><b>제목</b></td>
           <td style="width:80%">
-          <input type="text" name="subject" id="subject" class="form-control">
+          <input type="text" name="subject" value="[RE]<c:out value="${subject }" />" id="subject" class="form-control">
           </td>
        </tr>
        <tr>

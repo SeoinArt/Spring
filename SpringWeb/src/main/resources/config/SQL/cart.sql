@@ -53,3 +53,16 @@ delete from member where idx=1;
 update member SET mstate=0 where idx=15;
 
 select * from cart;
+
+--------------------------------------------------------------------------------
+
+-- 2023-05-12
+select * from spring_board order by 1 desc;
+
+
+select row_num() over(order by refer desc, sunbun asc) rn, * from spring_board;
+
+
+
+
+

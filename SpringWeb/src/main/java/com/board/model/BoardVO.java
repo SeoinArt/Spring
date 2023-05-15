@@ -30,6 +30,8 @@ public class BoardVO {
 	private String originFilename; // 원본 파일명
 	private long filesize; // 파일 크기 
 	
+	private String old_filename; // 예전에 첨부한 파일명 - 글 수정시 사용
+	
 	// 답변형 게시판에서 필요한 property
 	private int refer; // 글그룹 번호 
 	private int lev; // 답변 레벨

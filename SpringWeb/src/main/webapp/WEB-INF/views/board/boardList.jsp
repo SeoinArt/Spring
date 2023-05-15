@@ -13,14 +13,14 @@
 <div class="row">
 	<div class='col-10 offset-1'>
 		<table class="table table-condensed table-striped">
-			<thead class="text-center">
+			<thead>
 				<th width="10%">글번호</th>
 				<th width="40%">제목</th>
 				<th width="20%">글쓴이</th>
 				<th width="20%">날짜</th>
 				<th width="10%">조회수</th>
 			</thead>
-			<tbody class="text-center">
+			<tbody>
 				<!-- ---------------------  -->
 				<c:if test="${boardArr eq null or empty boardArr}">
 					<td colspan="5">
@@ -32,10 +32,32 @@
 						<tr>
 							<td>
 								<c:out value="${board.num}"/>
-								<c:out value=""/>
+								
 							</td>
+							<!-- prodDetail?pnum=1 ==>@RequestParam("pnum")
+			                     prodDetail/1
+			                     
+			                     board/list
+			                     board/write
+			                     board/view/글번호  => @PathVariable("num")
+			               
+			                -->
 							<td>
-								<c:out value="${board.subject}"/>
+								<!-- 답변 레벨에 따라 들여쓰기 -->
+								<c:forEach var="k" begin="0" end="${board.lev}">
+									&nbsp;&nbsp;&nbsp;
+								</c:forEach>
+								<c:if test="${board.lev>0}">
+									<img src="../images/re.png">
+								</c:if>
+								<a href="view/<c:out value="${board.num}"/>"><c:out value="${board.subject}"/></a>
+								<!-- 첨부파일 여부  -->
+								<c:if test="${board.filesize>0}">
+									<span class="float-right">
+										<img src="../images/attach.jpg" style="width:20px" title="<c:out value="${board.originFilename}"/>">
+									</span>
+								</c:if>
+								<!-- 첨부파일 여부  -->
 							</td>
 							<td>
 								<c:out value="${board.userid}"/>
@@ -53,7 +75,19 @@
 			</tbody>
 			<tfoot>
 				<tr>
-					<td colspan="3">페이지 네비</td>
+					<td colspan="3" class="text-center">
+					<ul class="pagination justify-content-center">
+						<c:forEach var="i" begin="1" end="${pageCount}">
+							<li class="page-item <c:if test="${i eq cpage}">active </c:if>" >
+								<a class="page-link" href="list?cpage=<c:out value="${i}"/>" >
+									<c:out value="${i}" />
+								</a>
+							</li>
+						
+						</c:forEach>
+					</ul>
+					
+					</td>
 					<td colspan="2">총 게시글 수 :  
 						<span class="text-primary">${totalCount} 개</span>
 						<br>

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!-- ckeditor 4 cdn ------------------------------------------------------- -->
 <script src="https://cdn.ckeditor.com/4.17.2/standard/ckeditor.js"></script>    
 <!-- ---------------------------------------------------------------------- -->
@@ -16,42 +17,41 @@
 <div class="row">
 
 <div align="center" id="bbs" class="col-md-8 offset-md-2 my-4">
-   <h2>Spring Board</h2>
+   <h2>Spring Board Edit</h2>
    <p>
       <a href="write">글쓰기</a>| <a
          href="list">글목록</a>
       <p>
-  <!--파일 업로드시
-   method: POST
-   enctype: multipart/form-data  -->   
+  <!-- 파일 업로드시
+	   method: POST
+	   enctype: multipart/form-data  -->   
 
    <form name="bf" id="bf" role="form" action="write" method="post" enctype="multipart/form-data" >
 	<!-- hidden data---------------------------------  -->
-	<input type="hidden" name="mode" value="write">
+	<input type="hidden" name="num" value="<c:out value="${board.num}"/>">
+	<input type="hidden" name="mode" value="edit">
 	<!-- 원본글쓰기: mode=> write
 		 답변글쓰기: mode=> rewrite
-		    글수정:: mode=> edit
+		  글수정  : mode=> edit
 	 -->
 	<!-- -------------------------------------------- -->       
     <table class="table">
        <tr>
           <td style="width:20%"><b>제목</b></td>
           <td style="width:80%">
-          <input type="text" name="subject" id="subject" class="form-control">
+          <input type="text" name="subject" id="subject" class="form-control" value="<c:out value="${board.subject}"/>">
           </td>
        </tr>
        <tr>
           <td style="width:20%"><b>글쓴이</b></td>
           <td style="width:80%">
-          <input type="text" name="userid" id="userid" value="${loginUser.userid}"
-           class="form-control">
+          <input type="text" name="userid" id="userid" value="<c:out value="${board.userid}"/>" class="form-control">
           </td>
        </tr>       
        <tr>
           <td style="width:20%"><b>글내용</b></td>
           <td style="width:80%">
-          <textarea name="content" id="bcontent" rows="10" cols="50"
-                  class="form-control"></textarea>
+          <textarea name="content" id="bcontent" rows="10" cols="50" class="form-control">${board.content}</textarea>
           </td>
        </tr>
        <tr>
@@ -65,12 +65,30 @@
       <tr>
          <td style="width: 20%"><b>첨부파일</b></td>
          <td style="width: 80%">
-         <input type="file" name="mfilename"
-            id="filename" class="form-control"></td>
+         
+	         <c:if test="${board.filename ne null}">
+	         	<c:out value="${board.originFilename}"/> [<c:out value="${board.filesize }"/>] bytes
+	         	
+	           	<!-- 파일 확장자 검사를 위해 모두 소문자로 바꾸자 -->
+	           	<c:set var="fname" value="${fn:toLowerCase(board.filename)}"/>
+	           	
+				<c:if test="${fn:endsWith(fname,'.jpg') or fn:endsWith(fname,'.png') or fn:endsWith(fname,'.gif')}">
+				<!-- /board/view/5 -->
+					<img class="img img-thumbnail" src="../resources/board_upload/<c:out value="${board.filename}"/>" style="width:80px">
+				</c:if>
+	         
+	         </c:if>
+			 <!-- 새로 첨부하는 파일명 ----------------------------------------------  -->	         
+	         <input type="file" name="mfilename" id="filename" class="form-control">
+	         
+	         <!-- 예전에 첨부한 파일명을 hidden으로 보내자 -------------------------------  -->
+	         <input type="hidden" name="old_filename" value="<c:out value="${board.filename}"/>" >
+	         <!-- -------------------------------------------------------------  -->
+         </td>
       </tr>
       <tr>
          <td colspan="2" class="text-center">
-            <button type="submit" id="btnWrite" class="btn btn-success">글쓰기</button>
+            <button type="submit" id="btnWrite" class="btn btn-success">글수정</button>
             <button type="reset" id="btnReset" class="btn btn-warning">다시쓰기</button>
          </td>
       </tr>
