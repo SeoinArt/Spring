@@ -3,4 +3,23 @@
  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.multi.mapper.BookMapper">
 	
+	<sql id="book_columns">
+		isbn, title, publish, price, published, bimage
+	</sql>
+	
+	<select id="getAllBook" resultType="Book">
+		select isbn, title, publish, price, published, bimage
+		from book 
+		order by 1
+	</select>
+	
+	<select id="getBookInfo" resultType="Book" parameterType="String">
+		select
+		<include refid="book_columns"/>
+		from book
+		<where>
+			isbn=${value}
+		</where> 
+	</select>
+	
 </mapper>
