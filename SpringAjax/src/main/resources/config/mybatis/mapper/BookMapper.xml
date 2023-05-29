@@ -22,4 +22,28 @@
 		</where> 
 	</select>
 	
+	<update id="updateBook" parameterType="Book">
+		update book set title = #{title},publish=#{publish},price=#{price}
+		<if test="bimage != null and bimage !=''">
+		,bimage=#{bimage}
+		</if>
+		<where>
+			isbn =#{isbn}
+		</where>
+	</update>
+	
+	<delete id="deleteBook" parameterType="string">
+		delete from book where isbn=#{isbn}
+	</delete>
+	
+	<select id="getPublishList" resultType="Book">
+		select distinct publish from book order by 1 asc
+	</select>
+	
+	<select id="getTitleList" resultType="Book" parameterType="string">
+		select title from book 
+		<where>publish = #{value}</where>
+		order by 1 asc
+	</select>
+	
 </mapper>

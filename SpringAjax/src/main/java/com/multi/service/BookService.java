@@ -9,4 +9,8 @@ public interface BookService {
 	BookVO getBookInfo(String isbn);
 	int insertBook(BookVO book);
 	int deleteBook(String isbn);
+	int updateBook(BookVO vo);
+	List<BookVO> getPublishList();
+	List<BookVO> getTitleList(String publish);
+	List<BookVO> findBook(String title);
 }
