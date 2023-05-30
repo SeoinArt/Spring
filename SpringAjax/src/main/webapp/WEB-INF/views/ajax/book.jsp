@@ -15,12 +15,29 @@
 	src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 <!-- ------------------------------------------------- -->
 <style type="text/css">
-	select{
-		padding:5px;
+	select {
+		padding: 5px;
 	}
-	#sel, #sel2{
-		margin:5px;
+	
+	#sel, #sel2 {
+		margin: 5px;
+	}
+	#lst1{
+		position:relative;
+		width:500px;
+		margin:0px;
+		border:1px solid silver; 
+		background:#efefef;
+		color:blue;
+		left:0px;
+	}
+	#lst2{
+		margin:0;
+		padding:2px;
 		
+	}
+	#lst2 ul li{
+		list-style:none;
 	}
 </style>
 
@@ -30,30 +47,34 @@
       //모든 도서 목록 가져오기
       getAllBook();
    });
+   //------------------------------------------------------------------------------------------
+   
+   
    //GET  /books :모든 도서정보가져오기
+   //GET /books?keyword=도서명 : 특정 도서정보 검색하기 (도서 제목)
    //GET  /books/isbn번호 : 특정 도서정보 가져오기
    //POST /books : 도서정보 등록
    //PUT  /books/isbn번호 : 특정 도서정보 수정하기
    //DELETE /books/isbn번호 : 특정 도서정보 삭제하기
-
-   const getPublish=function(){
-	   $.ajax({
-		   type:'get',
-		   url:'publishList',
-		   dataType:'json',
-		   cache:false,
-	   })
-	   .done((res)=>{
-		 //alert(JSON.stringify(res));
-		 showSelect(res);
-		 
-	   })
-	   .fail((err)=>{
-		   alert(err.status);
-	   })
-   }// ~getPublish();
    
-   const showSelect = function(data){
+	const getPublish=function(){
+		 $.ajax({
+		  type:'get',
+		  url:'publishList',
+		  dataType:'json',
+		  cache:false,
+		 })
+		 .done((res)=>{
+		//alert(JSON.stringify(res));
+		showSelect(res);
+		
+		 })
+		 .fail((err)=>{
+		  alert(err.status);
+		 })
+	}// ~getPublish();
+ 	//------------------------------------------------------------------------------------------
+	const showSelect = function(data){
 		let str = '<select name ="publish" onchange="getTitleByPub(this.value)">';
 		str+='<option value="">::출판사 목록::</option>'
 		$.each(data,(i,book)=>{
@@ -65,25 +86,58 @@
 		str+='</select>';
 		
 		$('#sel').html(str);
-   }// ~showSelect();
-  
-   const getTitleByPub = function(pub){
-	   //alert(pub);
+	}// ~showSelect();
+	//------------------------------------------------------------------------------------------
+	const getTitleByPub = function(pub){
+	 //alert(pub);
+		 $.ajax({
+		  type:'get',
+		  url:'titleList?publish='+pub,
+		  dataType:'json',
+		  cache:false,
+		 })
+		 .done((res)=>{
+		showSelect2(res); 
+		 })
+		 .fail((err)=>{
+		alert(err.status);  
+	 })
+	}
+    //------------------------------------------------------------------------------------------
+	const bookInfo = function(vtitle){
+       if(!vtitle){
+    	   vtitle=$('#books').val(); // 키워드 입력값 가져오기
+    	   if(!vtitle){
+    		   alert('검색어를 입력하세요');
+    		   clearBookInfo();
+    		   $('#book_data').html("");
+    		   $('#books').focus();
+    		   return;
+    	   }
+       }
+       console.log('vtitle:'+vtitle);
+	   //alert("a");
 	   $.ajax({
 		   type:'get',
-		   url:'titleList?publish='+pub,
+		   url:'books?keyword='+encodeURIComponent(vtitle),
 		   dataType:'json',
-		   cache:false,
+		   cache:false
+	   }).done((res)=>{
+		   //alert(JSON.stringify(res));
+		   showBooks(res);
+		   
+		   if(res.length>0){
+			   showBookInfo(res[0]);
+		   }else{
+			   clearBookInfo();
+		   }
+	   }).fail((err)=>{
+		   alert(err.status);
 	   })
-	   .done((res)=>{
-		 showSelect2(res); 
-	   })
-	   .fail((err)=>{
-		 alert(err.status);  
-	   })
-   }
-   
-   const showSelect2 = function(data){
+	}
+    
+    //------------------------------------------------------------------------------------------
+	const showSelect2 = function(data){
 		let str = '<select name ="publishTitle" onchange="bookInfo(this.value)">';
 		str+='<option value="">::도서명 목록::</option>'
 		$.each(data,(i,book)=>{
@@ -95,10 +149,10 @@
 		str+='</select>';
 		
 		$('#sel2').html(str);
-  }// ~showSelect(); 
+	}// ~showSelect(); 
+	//------------------------------------------------------------------------------------------   
    
-   
-  const goDel=function(visbn){
+	const goDel=function(visbn){
       //alert(visbn);
       let url="books/"+visbn;
       $.ajax({
@@ -119,7 +173,7 @@
          }
       })
    }//
-   
+   //------------------------------------------------------------------------------------------	
    
    //도서정보 수정처리
    const goEditEnd=function(){
@@ -148,6 +202,7 @@
             //alert(res);//{result:'OK'}
             if(res.result=='OK'){
             	getAllBook();
+            	
             }else{
             	alert('도서 정보 수정 실패');
             	
@@ -157,7 +212,8 @@
             alert(err.status);
          }
       })
-   }//
+   }
+   //------------------------------------------------------------------------------------------
    
    //도서정보 보여주기
    const goEdit = function(visbn){
@@ -166,22 +222,24 @@
             url:'books/'+visbn,
             dataType:'json',
             success:function(res){
-               //alert(JSON.stringify(res))
-               $('#isbn').val(res.isbn);
-               $('#title').val(res.title);
-               $('#publish').val(res.publish);
-               $('#price').val(res.price);
-               $('#published').val(res.published);
-               let str='<img src="resources/Upload/'+res.bimage+'" class="img img-thumbnail">'
-               $('#bimage').html(str);
+            	showBookInfo(res)
             },
             error:function(e){
                alert(e.status);
             }
          })
       } 
-   
-   
+   //------------------------------------------------------------------------------------------
+   const showBookInfo = function(res){
+	   $('#isbn').val(res.isbn);
+       $('#title').val(res.title);
+       $('#publish').val(res.publish);
+       $('#price').val(res.price);
+       $('#published').val(res.published);
+       let str='<img src="resources/Upload/'+res.bimage+'" class="img img-thumbnail">'
+       $('#bimage').html(str);
+   }
+   //------------------------------------------------------------------------------------------
    const getAllBook=function(){
       $.ajax({
          type:'get',
@@ -195,7 +253,8 @@
             alert(err.status)
          }
       })
-   }//-----------------------------
+   }
+ 	//------------------------------------------------------------------------------------------
    const showBooks=function(res){
       let str='<table class="table table-bordered">';
       $.each(res, (i, book)=>{
@@ -225,7 +284,52 @@
           })
          str+='</table>';
       $('#book_data').html(str);
-   }//-------------------------------
+   }
+   //------------------------------------------------------------------------------------------
+   const clearBookInfo=function(){
+	   $('#isbn').val("");
+       $('#title').val("");
+       $('#publish').val("");
+       $('#price').val("");
+       $('#published').val("");
+       $('#bimage').html("");
+   }
+   //------------------------------------------------------------------------------------------
+   
+   // 검색어 자동 완성
+   const autoComp = function(val){
+	   //console.log(val);
+	   $.ajax({
+		   type:'post',
+		   url:'autoComp',
+		   data:'keyword='+val,
+		   dataType:'json',
+		   cache:false
+	   }).done((res)=>{
+		   //console.log(JSON.stringify(res));
+		   let str = '<ul>';
+		   $.each(res,function(i,title){
+			   str+='<li><a href="#" onclick="setting(\''+title+'\')">';
+			   str+=title;
+			   str+='</li>';
+		   })
+		   str+='</ul>';
+		   $('#lst1').show();
+		   $('#lst2').html(str).show();
+		   
+	   })
+	   .fail((err)=>{
+			alert(err.status);		   
+	   })
+   }
+   //------------------------------------------------------------------------------------------
+   
+   const setting= function(val){
+	   $('#books').val(val);
+	   $('#lst2').hide();
+	   $('#lst1').hide();
+   }
+   
    
 </script>
 </head>
@@ -254,13 +358,12 @@
 		</form>
 		<div>
 
-			<button type="button" onclick="getBook()" class="btn btn-primary">검색</button>
+			<button type="button" onclick="bookInfo('')" class="btn btn-primary">검색</button>
 
 			<button type="button" onclick="getAllBook()" class="btn btn-success">모두보기</button>
 			<button type="button" id="openBtn" class="btn btn-info">OPEN
 				API에서 검색</button>
-			<br>
-			<br>
+			<br> <br>
 		</div>
 		<div id="localBook">
 			<div id="publishList"></div>

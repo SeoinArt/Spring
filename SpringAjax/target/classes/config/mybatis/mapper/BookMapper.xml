@@ -46,4 +46,19 @@
 		order by 1 asc
 	</select>
 	
+	<select id="getFindBook" resultType="Book" parameterType="string">
+	
+		select 
+		<include refid="book_columns"/>
+		from book
+		<where>title like '%'||#{value}||'%'</where>
+		order by title asc
+	</select>
+	
+	<select id="getAutoComplete" resultType="string" parameterType="string">
+		select title
+		from book
+		<where>title like '%'||#{value}||'%'</where>
+	</select>
+	
 </mapper>

@@ -12,5 +12,6 @@ public interface BookService {
 	int updateBook(BookVO vo);
 	List<BookVO> getPublishList();
 	List<BookVO> getTitleList(String publish);
-	List<BookVO> findBook(String title);
+	List<BookVO> getFindBook(String title);
+	List<String> getAutoComplete(String keyword);
 }
