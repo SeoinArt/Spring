@@ -45,8 +45,8 @@
 				<span class="wdate">[${vo.wdate}]</span></td>
 				<td>${vo.name}</td>
 				<td>
-					<a href="memoEdit?no=${vo.no}">수정</a>|
-					<a href="memoDel?no=${vo.no}">삭제</a>
+					<a href="edit/${vo.id}">수정</a>|
+					<a href="delete/${vo.id}">삭제</a>
 				</td>
 			</tr>
 			</c:forEach>

@@ -10,4 +10,5 @@ public interface MemoService {
 	List<MemoVO>  listMemo();
 	int deleteMemo(String id);
 	int updateMemo(MemoVO memo);
+	MemoVO getMemo(String id);
 }
